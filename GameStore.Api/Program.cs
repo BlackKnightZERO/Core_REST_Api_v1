@@ -12,8 +12,13 @@ List<GameDto> games = new List<GameDto>
         new GameDto(3, "Farcry 3", "Arcade", 49.99M, new DateOnly(2013, 4, 23))
     };
 
+//getAll
 app.MapGet("games", () => games);
+
+// getById
 app.MapGet("games/{id}", (int id) => games.Find(game => game.Id == id)).WithName(GetGameEndPointName);
+
+// create
 app.MapPost("games", (CreateGameDto newGame) =>
 {
     GameDto game = new(
@@ -25,6 +30,21 @@ app.MapPost("games", (CreateGameDto newGame) =>
     );
     games.Add(game);
     return Results.CreatedAtRoute(GetGameEndPointName, new { id = game.Id }, game);
+});
+
+// update
+app.MapPut("games/{id}", (int id, UpdateGameDto updatedGame) =>
+{
+    var index = games.FindIndex(game => game.Id == id);
+    games[index] = new GameDto(id, updatedGame.Name, updatedGame.Genre, updatedGame.Price, updatedGame.ReleaseDate);
+    return Results.NoContent();
+});
+
+//delete
+app.MapDelete("games/{id}", (int id) =>
+{
+    games.RemoveAll(game => game.Id == id);
+    return Results.NoContent();
 });
 
 app.MapGet("/", () => "Hello World!");

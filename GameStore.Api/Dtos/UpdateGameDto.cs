@@ -4,8 +4,9 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public record class CreateGameDto
+public class UpdateGameDto
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Genre { get; set; }
     public decimal Price { get; set; }
@@ -13,8 +14,10 @@ public record class CreateGameDto
     [JsonConverter(typeof(DateOnlyConverter))]
     public DateOnly ReleaseDate { get; set; }
 
-    public CreateGameDto(int id, string name, string genre, decimal price, DateOnly releaseDate)
+    // Constructor
+    public UpdateGameDto(int id, string name, string genre, decimal price, DateOnly releaseDate)
     {
+        Id = id;
         Name = name;
         Genre = genre;
         Price = price;
@@ -22,5 +25,6 @@ public record class CreateGameDto
     }
 
     // Default constructor for serialization
-    public CreateGameDto() { }
+    public UpdateGameDto() { }
 }
+
