@@ -1,0 +1,18 @@
+GET http://localhost:5118
+
+###
+GET http://localhost:5118/games
+
+###
+GET http://localhost:5118/games/1
+
+###
+POST http://localhost:5118/games
+Content-Type: application/json
+
+{
+    "name": "Call of Duty",
+    "genre": "First Person Shooting",
+    "price": 39.99,
+    "releaseDate": "2011-11-18"
+}
